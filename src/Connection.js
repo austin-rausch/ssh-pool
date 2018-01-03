@@ -1,6 +1,7 @@
 import { exec } from 'child_process'
 import path from 'path'
 import LineWrapper from 'stream-line-wrapper'
+import uuid from 'uuid/v4'
 import { tmpName as asyncTmpName } from 'tmp'
 import { formatRsyncCommand, checkRsyncAvailability } from './commands/rsync'
 import { formatSshCommand } from './commands/ssh'
@@ -37,6 +38,7 @@ class Connection {
    * @param {boolean} [options.asUser] Use a custom user to run command
    */
   constructor(options = {}) {
+    this.id = options.id || uuid()
     this.options = options
     this.remote = parseRemote(options.remote)
     this.remote.user = this.remote.user || 'deploy'

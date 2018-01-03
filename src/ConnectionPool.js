@@ -15,6 +15,18 @@ class ConnectionPool {
       return new Connection({ remote: connection, ...options })
     })
   }
+  addConnections (input, options) {
+    const connections = input.map(connection => {
+      if (connection instanceof Connection) return connection
+      return new Connection({ remote: connection, ...options })
+    })
+    this.connections = this.connections.concat(connections)
+  }
+  removeConnections (ids) {
+    this.connections = this.connections.filter(connection => {
+      return ids.indexOf(connection.id) !== -1
+    })
+  }
 }
 
 ;[
